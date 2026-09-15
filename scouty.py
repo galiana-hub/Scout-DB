@@ -1,4 +1,5 @@
 import soccerdata as sd
+import pandas as pd
 
 LIGAS = [
     'ENG-Premier League',
@@ -8,11 +9,11 @@ LIGAS = [
     'ITA-Serie A'
 ]
 
-# 2026/27 -> FBref lo quiere así: 2026-2027
+print("Bajando datos FBref 2026/27...")
 fbref = sd.FBref(leagues=LIGAS, seasons="2026-2027")
 
 df = fbref.read_player_season_stats(stat_type="standard")
-print(f"Jugadores encontrados: {len(df)}")
+print(f"Encontrados {len(df)} jugadores")
 
-df.to_json("datos_26-27.json", orient="records", indent=2)
-print("JSON guardado!")
+df.to_json("datos_26-27.json", orient="records", indent=2, force_ascii=False)
+print("¡Hecho! Archivo datos_26-27.json creado")
