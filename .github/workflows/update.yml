@@ -1,0 +1,21 @@
+yamlname: Actualiza Scout DB 26-27
+on:
+  schedule:
+    - cron: '0 6 * * *'
+  workflow_dispatch:
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      - run: pip install -r requirements.txt
+      - run: python scout.py
+      - run: |
+          git config user.name "Scout Bot"
+          git config user.email "bot@scout-db.com"
+          git add .
+          git commit -m "Update 26/27" || echo "sin cambios"
+          git push
