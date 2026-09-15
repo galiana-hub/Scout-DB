@@ -1,4 +1,4 @@
-yamlname: Actualiza Scout DB 26-27
+name: Actualiza Scout DB 26-27
 on:
   schedule:
     - cron: '0 6 * * *'
@@ -12,7 +12,7 @@ jobs:
         with:
           python-version: '3.11'
       - run: pip install -r requirements.txt
-      - run: python scout.py
+      - run: python scouty.py
       - run: |
           git config user.name "Scout Bot"
           git config user.email "bot@scout-db.com"
