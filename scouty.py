@@ -1,20 +1,18 @@
 import soccerdata as sd
-import pandas as pd
 
-LIGAS = ["ENG-Premier League", "ESP-La Liga", "ITA-Serie A", "GER-Bundesliga", "FRA-Ligue 1", "INT-Champions League"]
-fbref = sd.FBref(leagues=LIGAS, seasons="26-27")
+LIGAS = [
+    'ENG-Premier League',
+    'ESP-La Liga',
+    'FRA-Ligue 1',
+    'GER-Bundesliga',
+    'ITA-Serie A'
+]
 
-standard = fbref.read_player_season_stats(stat_type="standard")
-shooting = fbref.read_player_season_stats(stat_type="shooting")
-passing = fbref.read_player_season_stats(stat_type="passing")
-defense = fbref.read_player_season_stats(stat_type="defense")
-jugadores = pd.concat([standard, shooting, passing, defense], axis=1)
-jugadores = jugadores.loc[:,~jugadores.columns.duplicated()]
-jugadores.to_json("jugadores_campo_26_27.json", orient="records")
-jugadores.to_csv("jugadores_campo_26_27.csv")
+# 2026/27 -> FBref lo quiere así: 2026-2027
+fbref = sd.FBref(leagues=LIGAS, seasons="2026-2027")
 
-keepers = fbref.read_player_season_stats(stat_type="keeper")
-keepers.to_json("porteros_26_27.json", orient="records")
+df = fbref.read_player_season_stats(stat_type="standard")
+print(f"Jugadores encontrados: {len(df)}")
 
-equipos = fbref.read_team_season_stats(stat_type="standard")
-equipos.to_json("equipos_26_27.json", orient="records")
+df.to_json("datos_26-27.json", orient="records", indent=2)
+print("JSON guardado!")
